@@ -2,8 +2,13 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useRecoilState } from "recoil";
 import { beerAtoms } from "../beerAtoms";
+import { atom, useAtom } from "jotai";
+
+const countAtom = atom(0);
 
 function Main() {
+
+  const [count, setCount] = useAtom(countAtom);
 //   const [beers, setBeers] = useState([]);
   const [beers, setBeers] = useRecoilState(beerAtoms);
 
@@ -18,8 +23,13 @@ function Main() {
       });
   }, []);
 
+  const clickHandle = () =>{
+    setCount(count + 1);
+  }
+
   return (
     <div className="grid mx-4 grid-cols-4 gap-5">
+      <h2>{count} <button onClick={clickHandle}>+</button></h2>
       {beers.map((beer) => {
         return (
           <div className="bg-cyan-600 card" key={beer.id}>

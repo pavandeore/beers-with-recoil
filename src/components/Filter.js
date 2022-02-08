@@ -13,8 +13,8 @@ function Filter() {
 
   useEffect(() => {
    inputRef.current.focus();
-console.log(beersArr);
-  }, [beersArr]);
+    console.log(beersArr);
+  }, []);
 
   const searchChangeHandler = (e) => {
 
