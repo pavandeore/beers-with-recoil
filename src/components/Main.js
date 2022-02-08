@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
-
 import axios from "axios";
+import { useRecoilState } from "recoil";
+import { beerAtoms } from "../beerAtoms";
 
 function Main() {
-  const [beers, setBeers] = useState([]);
+//   const [beers, setBeers] = useState([]);
+  const [beers, setBeers] = useRecoilState(beerAtoms);
 
   useEffect(() => {
     axios
