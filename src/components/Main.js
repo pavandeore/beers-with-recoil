@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
-import { useRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { beerAtoms } from "../beerAtoms";
 import { atom, useAtom } from "jotai";
+
+import { beersSelectorState } from "../selectors";
 
 const countAtom = atom(0);
 
 function Main() {
-
   const [count, setCount] = useAtom(countAtom);
-//   const [beers, setBeers] = useState([]);
-  const [beers, setBeers] = useRecoilState(beerAtoms);
+  const setBeers = useSetRecoilState(beerAtoms);
+  const BeersList = useRecoilValue(beersSelectorState);
 
   useEffect(() => {
     axios
@@ -23,14 +24,16 @@ function Main() {
       });
   }, []);
 
-  const clickHandle = () =>{
+  const clickHandle = () => {
     setCount(count + 1);
-  }
+  };
 
   return (
     <div className="grid mx-4 grid-cols-4 gap-5">
-      <h2>{count} <button onClick={clickHandle}>+</button></h2>
-      {beers.map((beer) => {
+      <h2>
+        {count} <button onClick={clickHandle}>+</button>
+      </h2>
+      {BeersList.map((beer) => {
         return (
           <div className="bg-cyan-600 card" key={beer.id}>
             <h5 className="text-xl pb-3">{beer.name.slice(0, 25)} -</h5> <hr />
